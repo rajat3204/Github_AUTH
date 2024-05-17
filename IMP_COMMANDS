@@ -1,0 +1,5 @@
+--> sudo ssh-agent bash -c 'ssh-add /home/ubuntu/keys/frontend-app; git clone git@github.com:rajcryptonaut/cognofi.app.git'
+--> netstat -plant | grep 80
+--> readlink -f <filename> 
+--> curl -ISL https://dev.jenkins.cognofi.app
+--> sudo netstat -tunlp
