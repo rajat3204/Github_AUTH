@@ -21,7 +21,7 @@ git pull  # use to pull the changes from the git repo . It doesn't need any auth
 
 ------------------------------------------------------------------------------------------------------
 # by using this we can clone private repo by passing token in single command 
---> git clone https://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@github.com/[REPO-OWNER]/[REPO-NAME]
+--> git clone https://TOKEn@github.com/[REPO-OWNER]/[REPO-NAME]
 
 
 # after creating a new branch you need to publish that branch to remote usingthis command 
