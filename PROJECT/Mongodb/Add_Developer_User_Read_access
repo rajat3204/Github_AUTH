@@ -1,0 +1,42 @@
+--------------------------------------------->
+This for developer
+---------------------------------------------->
+
+--> use db-name
+
+
+
+
+
+------------------------------for user
+db.createUser(
+{
+	user: "developer",
+
+	pwd: "giubfsi74h",
+
+	roles:[{role: "read" , db:"db-name"}]
+})
+
+---------------------------------
+
+
+
+
+db.grantRolesToUser('username', [{ role: 'read', db: 'db-name' }])
+
+
+
+
+
+
+
+
+
+#####################>
+If this didn't work
+-------------------> 
+
+
+############# Remember to add temp collection ################
+db.createCollection("tempcollection")

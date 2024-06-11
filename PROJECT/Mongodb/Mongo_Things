@@ -1,0 +1,52 @@
+
+-----------------------------------------------------MONGO---------------------------------------------
+
+While we deploy a mongo db using the docker compose file. We specify a custom username and password and create the environment of that username and password. and pass in the  mongodb service inthe docker-compose.yml
+
+Also we can log into the mongo db by using the username and password. Then if needed we can create the another user with specific permission's .
+
+# simply you loginto the mongodb
+> mongosh mongodb://your_username:your_password@your_hostname:your_port/your_database
+----------Connection_string------------------------------->
+DB_URL=mongodb://admin:pass@localhost:27017/todos
+------------------------------------------------------------> 
+# use this command to show databases
+> show dbs
+# use this command to switch to the db
+> use <db-name>
+# run this command to create the user with specific permsssion's.
+> db.createUser(
+   {
+     user: "dev",
+     pwd: "123",
+     roles: [ "dbOwner" ]
+   }
+)
+
+
+
+> db.grantRolesToUser('username', [{ role: 'dbOwner', db: 'db-name' }])
+
+
+
+# You can go through this link to download the " mongosh  " command 
+
+--> https://www.mongodb.com/docs/mongodb-shell/run-commands/
+
+--> for ubuntu use these commands
+> wget -qO- https://www.mongodb.org/static/pgp/server-7.0.asc | sudo tee /etc/apt/trusted.gpg.d/server-7.0.asc
+> sudo apt-get install gnupg
+> wget -qO- https://www.mongodb.org/static/pgp/server-7.0.asc | sudo tee /etc/apt/trusted.gpg.d/server-7.0.asc
+> echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+> sudo apt-get update
+> sudo apt-get install -y mongodb-mongosh
+> mongosh --version
+
+
+
+
+
+
+
+
+mongosh mongodb://username:pass@mongo:27017/

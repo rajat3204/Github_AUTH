@@ -1,0 +1,48 @@
+#inside the db run this command 
+#firstly login using this command 
+
+--> mongosh -u username -p passwd 
+
+
+
+#####run this command to create db and switch the db
+
+use <db-name>
+
+
+
+#####use this command to create user with specific role.
+
+db.createUser(
+{
+	user: "rajat",
+
+	pwd: "kumar",
+
+	roles:[{role: "dbAdmin" , db:"project"}]
+})
+
+
+
+##### after this run this command 
+
+db.grantRolesToUser('rajat', [{ role: 'dbOwner', db: 'project' }])
+
+
+
+
+
+#####################>
+If this didn't work
+-------------------> 
+
+
+############# Remember to add temp collection ################
+	db.createCollection("tempcollection")
+
+
+------------------------ > 
+Connection_String
+------------------------ > 
+
+mongosh mongodb://user:123@mongo:27017/new

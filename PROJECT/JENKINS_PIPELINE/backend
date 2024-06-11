@@ -1,0 +1,45 @@
+node('') {
+
+  try {
+    def BRANCH = "master"
+    def APP_NAME = "hedgeBackend"
+    def GIT_URL = "git@gitlab.oodleslab.com:oodles/hedgebackend.git"
+    def GIT_CRED_ID = "hedgeBackend"
+    def ENV_FILE = "/var/jenkins_home/files/backend"
+    def DOCKER_FILENAME = "Dockerfile"
+    def DOCKER_IMAGE_TAG_1 = "${APP_NAME.toLowerCase()}:latest"
+    def SSHKEYPATH = "/var/jenkins_home/files/ssh/stable-coin-prod.pem"
+    def SSHUSERNAME = "ubuntu"
+    def SSHIP = "10.0.12.0"
+    def DOCKERCOMPOSEPATH = "/opt/docker/apps/docker-compose.yml"
+    def DOCKERSERVICENAME = "backend"
+    
+    stage('Checkout code from git') {
+        checkout([$class: 'GitSCM', branches: [[name: '*/'+BRANCH]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: GIT_CRED_ID, url: GIT_URL]]])
+    }
+        
+        
+    stage('Adding env files') 
+         {
+            sh "cp ${ENV_FILE}/development.env ./config/development.env"
+            sh "cp ${ENV_FILE}/Dockerfile ./Dockerfile"
+        }  
+    
+    stage('Build Docker Image') 
+         {
+            sh "ssh -o StrictHostKeyChecking=no -i ${SSHKEYPATH} ${SSHUSERNAME}@${SSHIP} 'sudo chmod 777 /var/run/docker.sock'"
+            sh("docker build -f ${DOCKER_FILENAME} -t ${DOCKER_IMAGE_TAG_1} . --no-cache")
+        }    
+    
+
+    stage('Build Deploy') {
+        echo "deploying ${DOCKERSERVICENAME} service"
+        sh "ssh -i ${SSHKEYPATH} -o StrictHostKeyChecking=no ${SSHUSERNAME}@${SSHIP} 'docker compose -f ${DOCKERCOMPOSEPATH} up -d --force-recreate ${DOCKERSERVICENAME} 2>&1'"
+    }   
+  }
+  
+  catch(e) {
+    echo "SOME ERROR OCCURED"
+    throw e
+  }
+}

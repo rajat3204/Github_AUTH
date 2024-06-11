@@ -1,0 +1,9 @@
+# When you are tryin to cloning private repo using jenkinspipeline
+--> define git repo url in jenkins file
+--> provide a git cred ID
+--> add the public key in github and private key in jenkins credentials with 
+SSH key and USERNAME.
+--> enter the key directly only and save the cred
+--> now Go > manage jenkins > security > on the botton select > no verification > apply and save.
+
+*** This is the proper way to clone the code in jenkins

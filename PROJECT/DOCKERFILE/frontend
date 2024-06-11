@@ -1,0 +1,13 @@
+FROM node:18.19 as node-image
+
+WORKDIR /frontend
+
+COPY package.json /frontend/
+#COPY package-lock.json /server/
+
+RUN npm install --legacy-peer-deps
+COPY . /frontend
+
+#RUN npm run build
+
+CMD ["npm", "start"]
