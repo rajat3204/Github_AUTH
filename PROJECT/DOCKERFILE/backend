@@ -7,8 +7,8 @@ COPY package.json /server/
 
 ARG NODE_ENV
 
-RUN npm install
+RUN yarn install
 
 COPY . ./
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]
