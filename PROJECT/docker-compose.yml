@@ -70,8 +70,8 @@ services:
     logging:
       driver: awslogs
       options:
-        awslogs-group: StableCoin_PROD_logs
-        awslogs-stream: backend_service_logs
+        awslogs-group: dex-screener-stage-logs
+        awslogs-stream: dex-screener-stage-backend
 
 networks:
   stable-coin-network:
