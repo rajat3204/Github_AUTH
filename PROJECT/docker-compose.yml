@@ -3,7 +3,7 @@ services:
   reverseproxy:
     image: nginx:1.17
     networks:
-      - stable-coin-network
+      - net
     volumes:
       - ./data/nginx:/etc/nginx/conf.d
       - ./data/extras:/etc/nginx/extras
@@ -14,11 +14,7 @@ services:
       - "80:80"
       - "443:443"
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-    logging:
-      driver: awslogs
-      options:
-        awslogs-group: StableCoin_PROD_logs
-        awslogs-stream: reverseproxy_service_logs
+
 
   certbot:
     image: certbot/certbot
@@ -74,4 +70,4 @@ services:
         awslogs-stream: dex-screener-stage-backend
 
 networks:
-  stable-coin-network:
+  net:
