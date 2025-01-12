@@ -51,3 +51,29 @@ RUN rm -rf /etc/nginx/conf.d/*
 COPY admin.conf /etc/nginx/conf.d/
 
 COPY --from=node /frontend/dist/ /var/app/html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+############################################### Another VITE Dockerfile
+FROM node:14.18.1 as intermediate
+WORKDIR /opt/app/
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=production --output-path=/opt/app/dist
+
+FROM nginx:1.16.1-alpine
+RUN rm -rf /etc/nginx/conf.d/*
+COPY adminfe.conf /etc/nginx/conf.d/
+COPY --from=intermediate /opt/app/dist/ /var/app/html
